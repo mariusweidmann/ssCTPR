@@ -11,6 +11,6 @@ Description: A Polygenic Risk Score (PRS) method based on elastic net regression
       correlated with the primary trait.
 License: GPL (>= 2)
 Encoding: UTF-8
-Imports: Rcpp (>= 1.0.5)
+Imports: Rcpp (>= 1.0.5), data.table, lassosum
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.1
