@@ -16,6 +16,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <cmath>
 #include <RcppArmadillo.h>
 
@@ -434,13 +435,16 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
   arma::vec denom=diag + Lambda2 + Lambda_ct; // denominator while updating beta coef
   
   //Rcout << "Yingxi-elnet: DEF" << std::endl;
+  std::ofstream myfile("/Users/jordanrossen/Desktop/ssctpr/yingxi_ssctpr.log", arma::ios::app);
   
   int conv=0;
   int count=0;
   dlx_pre=0.0;
   for(int k=0;k<maxiter ;k++) {
+    myfile << "k = " + std::to_string(k) + "   \n";
     dlx_cur=0.0;
     for(j=0; j < p; j++) {
+      myfile << "j = " + std::to_string(j) + "   \n";
       del=0.0;
       xj=x(j);
       x(j)=0.0;
@@ -459,6 +463,10 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
         ctp=0.0;
       }
    
+      
+      myfile << "u = " + std::to_string(r) + "   \n";
+      myfile << "ctp  = " + std::to_string(ctpr) + "   \n";
+
       // update the beta coef
       if(std::abs(t+ctp)-lambda1 > 0.0){
         if(t+ctp-lambda1 > 0.0){
@@ -467,6 +475,7 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
           x(j)=(t+lambda1+ctp)/denom(j);
         }
       }
+      myfile << "new_beta_hat_j = " + std::to_string(x(j)) + "   \n";
       
       if(x(j)==xj) continue;
       del=x(j)-xj;   // x(j) is new, xj is old
@@ -474,7 +483,9 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
       
       yhat += del*X.col(j); // update yhat
       dlx_cur=std::max(dlx_cur,std::abs(del)); 
+      myfile << "\n";
     } 
+    myfile << "\n";
     if(std::abs(dlx_cur-dlx_pre)<1e-6){
       count++;
     } else{
