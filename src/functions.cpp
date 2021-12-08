@@ -464,8 +464,8 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
       }
    
       
-      myfile << "u = " + std::to_string(r) + "   \n";
-      myfile << "ctp  = " + std::to_string(ctpr) + "   \n";
+      myfile << "u = " + std::to_string(t) + "   \n";
+      myfile << "ctp  = " + std::to_string(ctp) + "   \n";
 
       // update the beta coef
       if(std::abs(t+ctp)-lambda1 > 0.0){
