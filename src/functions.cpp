@@ -435,27 +435,14 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
   arma::vec denom=diag + Lambda2 + Lambda_ct; // denominator while updating beta coef
   
   //Rcout << "Yingxi-elnet: DEF" << std::endl;
-  std::ofstream myfile("/Users/jordanrossen/Desktop/ssctpr/yingxi_ssctpr.log", arma::ios::app);
+  //std::ofstream myfile("/Users/jordanrossen/Desktop/ssctpr/yingxi_ssctpr.log", arma::ios::app);
   
   int conv=0;
   int count=0;
   dlx_pre=0.0;
   for(int k=0;k<maxiter ;k++) {
-    myfile << "k = " + std::to_string(k) + "   \n";
     dlx_cur=0.0;
     for(j=0; j < p; j++) {
-      myfile << "j = " + std::to_string(j) + "   \n";
-      myfile << "X_jTX_j = " + std::to_string(diag(j)) + "   \n";
-      myfile << "yhat[0]= " + std::to_string(yhat[0]) + "   \n";
-      myfile << "yhat[1]= " + std::to_string(yhat[1]) + "   \n";
-      myfile << "yhat[2]= " + std::to_string(yhat[2]) + "   \n";
-      myfile << "yhat[3]= " + std::to_string(yhat[3]) + "   \n";
-      myfile << "yhat[4]= " + std::to_string(yhat[4]) + "   \n";
-      myfile << "X[0,j]= " + std::to_string(X.col(j)[0]) + "   \n";
-      myfile << "X[1,j]= " + std::to_string(X.col(j)[1]) + "   \n";
-      myfile << "X[2,j]= " + std::to_string(X.col(j)[2]) + "   \n";
-      myfile << "X[3,j]= " + std::to_string(X.col(j)[3]) + "   \n";
-      myfile << "X[4,j]= " + std::to_string(X.col(j)[4]) + "   \n";
       del=0.0;
       xj=x(j);
       x(j)=0.0;
@@ -475,19 +462,16 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
       }
    
       
-      myfile << "u = " + std::to_string(t) + "   \n";
-      myfile << "ctp  = " + std::to_string(ctp) + "   \n";
+      //myfile << "u = " + std::to_string(t) + "   \n";
 
       // update the beta coef
       if(std::abs(t+ctp)-lambda1 > 0.0){
         if(t+ctp-lambda1 > 0.0){
-          x(j)=t-lambda1+ctp/denom(j);
+          x(j) = (t-lambda1+ctp/denom(j);
         } else{
-          x(j)=t+lambda1+ctp/denom(j);
+          x(j) = (t+lambda1+ctp)/denom(j);
         }
       }
-      myfile << "new_beta_hat_j = " + std::to_string(x(j)) + "   \n";
-      myfile << "\n";
       
       if(x(j)==xj) continue;
       del=x(j)-xj;   // x(j) is new, xj is old
@@ -496,7 +480,6 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
       yhat += del*X.col(j); // update yhat
       dlx_cur=std::max(dlx_cur,std::abs(del)); 
     } 
-    myfile << "\n";
     if(std::abs(dlx_cur-dlx_pre)<1e-6){
       count++;
     } else{
