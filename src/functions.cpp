@@ -445,6 +445,7 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
     dlx_cur=0.0;
     for(j=0; j < p; j++) {
       myfile << "j = " + std::to_string(j) + "   \n";
+      myfile << "X_jTX_j = " + std::to_string(diag(j)) + "   \n";
       del=0.0;
       xj=x(j);
       x(j)=0.0;
@@ -476,6 +477,7 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
         }
       }
       myfile << "new_beta_hat_j = " + std::to_string(x(j)) + "   \n";
+      myfile << "\n";
       
       if(x(j)==xj) continue;
       del=x(j)-xj;   // x(j) is new, xj is old
@@ -483,7 +485,6 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
       
       yhat += del*X.col(j); // update yhat
       dlx_cur=std::max(dlx_cur,std::abs(del)); 
-      myfile << "\n";
     } 
     myfile << "\n";
     if(std::abs(dlx_cur-dlx_pre)<1e-6){
