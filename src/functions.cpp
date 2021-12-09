@@ -446,6 +446,11 @@ int elnet(double lambda1, double lambda2, double lambda_ct, const arma::vec& dia
     for(j=0; j < p; j++) {
       myfile << "j = " + std::to_string(j) + "   \n";
       myfile << "X_jTX_j = " + std::to_string(diag(j)) + "   \n";
+      myfile << "yhat[0]= " + std::to_string(yhat[0]) + "   \n";
+      myfile << "yhat[1]= " + std::to_string(yhat[1]) + "   \n";
+      myfile << "yhat[2]= " + std::to_string(yhat[2]) + "   \n";
+      myfile << "yhat[3]= " + std::to_string(yhat[3]) + "   \n";
+      myfile << "yhat[4]= " + std::to_string(yhat[4]) + "   \n";
       del=0.0;
       xj=x(j);
       x(j)=0.0;
